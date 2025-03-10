@@ -1,0 +1,4 @@
+﻿RULE_NAME            :: REGEX_PATTERN           :: BROWSER_EXE_PATH                                      :: PARAMS
+Test Environment     :: uat-example             :: C:\Program Files\Google\Chrome\Application\chrome.exe :: --profile-directory="Profile 1"
+Route ALL            :: github                  :: C:\Program Files\Mozilla Firefox\firefox.exe          :: 
+Route ALL            :: .*                      :: C:\Program Files\Google\Chrome\Application\chrome.exe :: --profile-directory="Default"
