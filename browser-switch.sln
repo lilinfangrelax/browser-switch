@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "browser-switch", "browser-switch.csproj", "{723A025F-4067-4847-9B34-1AB632125F4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{0FA32558-6144-47BC-92E3-A9354DFDF28E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{723A025F-4067-4847-9B34-1AB632125F4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723A025F-4067-4847-9B34-1AB632125F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723A025F-4067-4847-9B34-1AB632125F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723A025F-4067-4847-9B34-1AB632125F4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FA32558-6144-47BC-92E3-A9354DFDF28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA32558-6144-47BC-92E3-A9354DFDF28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA32558-6144-47BC-92E3-A9354DFDF28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA32558-6144-47BC-92E3-A9354DFDF28E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5394DD0C-0391-4015-8766-907BFB53D677}
+	EndGlobalSection
+EndGlobal
