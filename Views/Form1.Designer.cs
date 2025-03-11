@@ -32,8 +32,10 @@ namespace browser_switch
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.Logger = new System.Windows.Forms.TextBox();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // Logger
@@ -49,6 +51,12 @@ namespace browser_switch
             this.Logger.Size = new System.Drawing.Size(909, 501);
             this.Logger.TabIndex = 0;
             this.Logger.WordWrap = false;
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
             // 
             // MainWindow
             // 
@@ -76,6 +84,8 @@ namespace browser_switch
         }
 
         #endregion
+
+        private NotifyIcon notifyIcon1;
     }
 }
 

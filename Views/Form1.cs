@@ -13,9 +13,45 @@ namespace browser_switch
         public MainWindow(String[] args)
         {
             InitializeComponent();
+            InitializeTray();
             this.Text = "browser-switch";
             _args = args;
             _service = new RouterService();
+        }
+
+        private void InitializeTray()
+        {
+            notifyIcon1.Text = "Background Service Running";
+
+            var menu = new ContextMenuStrip();
+            menu.Items.Add("显示窗口", null, (s, e) => RestoreWindow());
+            menu.Items.Add("退出", null, (s, e) => Application.Exit());
+
+            notifyIcon1.ContextMenuStrip = menu;
+            notifyIcon1.MouseDoubleClick += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Left) RestoreWindow();
+            };
+        }
+
+        private void RestoreWindow()
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
+            this.ShowInTaskbar = true;
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                this.Hide();
+                notifyIcon1.Visible = true;
+                this.ShowInTaskbar = false;
+            }
+            base.OnFormClosing(e);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -44,7 +80,9 @@ namespace browser_switch
                 string[] newParams = data.Split('|');
                 ProcessNewParams(newParams);
                 this.WindowState = FormWindowState.Normal;
-                this.BringToFront();
+                // fix issue: When you click the URL, the minimized window is always popup. 
+                // https://github.com/lilinfangrelax/browser-switch/issues/4
+                //this.BringToFront();
             }
             base.WndProc(ref m);
         }
