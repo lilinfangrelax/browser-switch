@@ -24,8 +24,8 @@ namespace browser_switch
             notifyIcon1.Text = "Background Service Running";
 
             var menu = new ContextMenuStrip();
-            menu.Items.Add("显示窗口", null, (s, e) => RestoreWindow());
-            menu.Items.Add("退出", null, (s, e) => Application.Exit());
+            menu.Items.Add("Show Window", null, (s, e) => RestoreWindow());
+            menu.Items.Add("Exit", null, (s, e) => Application.Exit());
 
             notifyIcon1.ContextMenuStrip = menu;
             notifyIcon1.MouseDoubleClick += (s, e) =>
@@ -33,13 +33,27 @@ namespace browser_switch
                 if (e.Button == MouseButtons.Left) RestoreWindow();
             };
         }
-
+        private bool _windowState = true;
         private void RestoreWindow()
         {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-            notifyIcon1.Visible = false;
-            this.ShowInTaskbar = true;
+            // toggle window state
+            // add feature:  hide in tray when close the window
+            // https://github.com/lilinfangrelax/browser-switch/issues/3
+            if (_windowState)
+            {
+                this.Hide();
+                notifyIcon1.Visible = true;
+                this.ShowInTaskbar = false;
+                _windowState = false;
+            }
+            else
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                _windowState = true;
+            }
+
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -48,6 +62,7 @@ namespace browser_switch
             {
                 e.Cancel = true;
                 this.Hide();
+                _windowState = false;
                 notifyIcon1.Visible = true;
                 this.ShowInTaskbar = false;
             }
