@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\BrowserDetectorService.cs" />
     <Compile Include="Services\RegistryService.cs" />
     <Compile Include="Services\RouterService.cs" />
     <Compile Include="Views\Form1.cs">

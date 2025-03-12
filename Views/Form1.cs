@@ -18,10 +18,17 @@ namespace browser_switch
             this.Text = "browser-switch";
             _args = args;
             _service = new RouterService();
-            CheckRegistry();
+
+            CheckRegistryAndDefaultBrowser();
+
+            Logger.AppendText($"Router.txt: {_curDir}\\router.txt");
+            Logger.AppendText(Environment.NewLine);
+            Logger.AppendText(Environment.NewLine);
+
+            CheckChromeFirefoxEdgeBrowser();
         }
 
-        public void CheckRegistry()
+        public void CheckRegistryAndDefaultBrowser()
         {
             RegistryService _registry_service = new RegistryService();
             bool ret = _registry_service.CheckIfExistRegistryKey();
@@ -39,6 +46,29 @@ namespace browser_switch
             if (!is_default_browser)
             {
                 Logger.AppendText("Please set this program as the DEFAULT application for http protocol in Windows settings ");
+            }
+            Logger.AppendText(Environment.NewLine);
+        }
+
+        public void CheckChromeFirefoxEdgeBrowser()
+        {
+            var detector = new BrowserDetectorService();
+            foreach (var browser in detector.DetectBrowsers())
+            {
+
+                Logger.AppendText($"Browser: {browser.Name}");
+                Logger.AppendText(Environment.NewLine);
+                Logger.AppendText($"Installed: {browser.IsInstalled}");
+                Logger.AppendText(Environment.NewLine);
+                Logger.AppendText($"Path: {browser.InstallPath}");
+                Logger.AppendText(Environment.NewLine);
+                Logger.AppendText("Profiles:");
+                Logger.AppendText(Environment.NewLine);
+                foreach (var profile in browser.Profiles)
+                {
+                    Logger.AppendText($"  {profile}");
+                    Logger.AppendText(Environment.NewLine);
+                }
                 Logger.AppendText(Environment.NewLine);
             }
 
@@ -50,7 +80,7 @@ namespace browser_switch
 
             var menu = new ContextMenuStrip();
             menu.Items.Add("Show Window", null, (s, e) => RestoreWindow());
-            menu.Items.Add("Config", null, (s, e) => ShowConfigDir());
+            menu.Items.Add("Router.txt", null, (s, e) => ShowConfigDir());
             menu.Items.Add("Exit", null, (s, e) => Application.Exit());
 
             notifyIcon1.ContextMenuStrip = menu;
@@ -150,9 +180,6 @@ namespace browser_switch
             {
                 var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 string newMsg = $"[{timestamp}] Received URL: {string.Join(", ", args)}";
-                Logger.AppendText($"{args.Length}");
-                Logger.AppendText(Environment.NewLine);
-
                 Logger.AppendText(newMsg);
                 Logger.AppendText(Environment.NewLine);
                 _service.Route(args[0]);
