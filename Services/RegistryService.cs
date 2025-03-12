@@ -147,5 +147,17 @@ namespace browser_switch.Services
             System.IO.File.WriteAllText("Browser-Switch-Register.reg", reg_file_txt);
         }
 
+
+        public bool CheckWindowsDefaultBrowser()
+        {
+            // HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice"))
+            {
+                string ProgId = key.GetValue("ProgId")?.ToString();
+                if (ProgId.Equals("BrowserSwitch"))
+                    return true;
+            }
+            return false;
+        }
     }
 }

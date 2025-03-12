@@ -10,6 +10,7 @@ namespace browser_switch
     {
         private String[] _args;
         private RouterService _service;
+        private string _curDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         public MainWindow(String[] args)
         {
             InitializeComponent();
@@ -28,10 +29,19 @@ namespace browser_switch
             Logger.AppendText(Environment.NewLine);
             if (!ret)
             {
-                Logger.AppendText($"The directory will open. Double-click the file: Browser-Switch-Register.reg");
+                Logger.AppendText("The directory will open. DOUBLE-click the file: Browser-Switch-Register.reg");
                 Logger.AppendText(Environment.NewLine);
                 _registry_service.CreateRegistry();
             }
+            bool is_default_browser = _registry_service.CheckWindowsDefaultBrowser();
+            Logger.AppendText($"Check Default Browser: {is_default_browser}");
+            Logger.AppendText(Environment.NewLine);
+            if (!is_default_browser)
+            {
+                Logger.AppendText("Please set this program as the DEFAULT application for http protocol in Windows settings ");
+                Logger.AppendText(Environment.NewLine);
+            }
+
         }
 
         private void InitializeTray()
@@ -40,6 +50,7 @@ namespace browser_switch
 
             var menu = new ContextMenuStrip();
             menu.Items.Add("Show Window", null, (s, e) => RestoreWindow());
+            menu.Items.Add("Config", null, (s, e) => ShowConfigDir());
             menu.Items.Add("Exit", null, (s, e) => Application.Exit());
 
             notifyIcon1.ContextMenuStrip = menu;
@@ -47,6 +58,11 @@ namespace browser_switch
             {
                 if (e.Button == MouseButtons.Left) RestoreWindow();
             };
+        }
+
+        private void ShowConfigDir()
+        {
+            System.Diagnostics.Process.Start("explorer.exe", _curDir);
         }
         private bool _windowState = true;
         private void RestoreWindow()
