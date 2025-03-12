@@ -28,7 +28,7 @@ namespace browser_switch
             Logger.AppendText(Environment.NewLine);
             if (!ret)
             {
-                Logger.AppendText($"The directory will be opened. Please DOUBLE Click file: Browser-Switch-Register.reg");
+                Logger.AppendText($"The directory will open. Double-click the file: Browser-Switch-Register.reg");
                 Logger.AppendText(Environment.NewLine);
                 _registry_service.CreateRegistry();
             }
@@ -120,10 +120,23 @@ namespace browser_switch
 
         private void ProcessNewParams(string[] args)
         {
+            if (args.Length == 1 && "".Equals(string.Join(", ", args)))
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                _windowState = true;
+                this.BringToFront();
+                return;
+            }
+
             if (args.Length > 0)
             {
                 var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 string newMsg = $"[{timestamp}] Received URL: {string.Join(", ", args)}";
+                Logger.AppendText($"{args.Length}");
+                Logger.AppendText(Environment.NewLine);
+
                 Logger.AppendText(newMsg);
                 Logger.AppendText(Environment.NewLine);
                 _service.Route(args[0]);
