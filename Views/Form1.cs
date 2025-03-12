@@ -17,6 +17,21 @@ namespace browser_switch
             this.Text = "browser-switch";
             _args = args;
             _service = new RouterService();
+            CheckRegistry();
+        }
+
+        public void CheckRegistry()
+        {
+            RegistryService _registry_service = new RegistryService();
+            bool ret = _registry_service.CheckIfExistRegistryKey();
+            Logger.AppendText($"Check registry: {ret}");
+            Logger.AppendText(Environment.NewLine);
+            if (!ret)
+            {
+                Logger.AppendText($"The directory will be opened. Please DOUBLE Click file: Browser-Switch-Register.reg");
+                Logger.AppendText(Environment.NewLine);
+                _registry_service.CreateRegistry();
+            }
         }
 
         private void InitializeTray()
