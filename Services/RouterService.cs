@@ -12,10 +12,8 @@ namespace browser_switch.Services
         // LoadTxtFile reads the contents of a text file and returns it as a string
         public string LoadTxtFile(string filePath)
         {
-            // Get current exe directory
-            string exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             // Load route rules from a text file
-            string textFilePath = exeDir + "\\" + filePath;
+            string textFilePath = Config.exeDir + "\\" + filePath;
             return System.IO.File.ReadAllText(textFilePath);
         }
 

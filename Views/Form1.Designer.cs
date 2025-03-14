@@ -76,7 +76,7 @@ namespace browser_switch
             this.Name = "MainWindow";
             this.Opacity = 0.77D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "browser-switch";
+            this.Text = Config.exeName;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

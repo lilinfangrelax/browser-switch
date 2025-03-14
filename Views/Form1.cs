@@ -10,18 +10,17 @@ namespace browser_switch
     {
         private String[] _args;
         private RouterService _service;
-        private string _curDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         public MainWindow(String[] args)
         {
             InitializeComponent();
             InitializeTray();
-            this.Text = "browser-switch";
+            this.Text = Config.exeName;
             _args = args;
             _service = new RouterService();
 
             CheckRegistryAndDefaultBrowser();
 
-            Logger.AppendText($"Router.txt: {_curDir}\\router.txt");
+            Logger.AppendText($"Router.txt: {Config.exeDir}\\router.txt");
             Logger.AppendText(Environment.NewLine);
             Logger.AppendText(Environment.NewLine);
 
@@ -92,7 +91,7 @@ namespace browser_switch
 
         private void ShowConfigDir()
         {
-            System.Diagnostics.Process.Start("explorer.exe", _curDir);
+            System.Diagnostics.Process.Start("explorer.exe", Config.exeDir);
         }
         private bool _windowState = true;
         private void RestoreWindow()

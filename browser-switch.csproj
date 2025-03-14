@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="Services\BrowserDetectorService.cs" />
     <Compile Include="Services\RegistryService.cs" />
     <Compile Include="Services\RouterService.cs" />
@@ -121,7 +122,7 @@
     <Content Include="Resources\browser-switch-icon.ico" />
     <Content Include="Resources\browser-switch-icon.png" />
     <Content Include="router.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

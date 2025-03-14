@@ -17,9 +17,8 @@ namespace browser_switch.Services
         {
 
             // get current working directory
-            string currentDir = System.IO.Directory.GetCurrentDirectory();
             // combine with exe filepath
-            _exePath = System.IO.Path.Combine(currentDir, "browser-switch.exe");
+            _exePath = System.IO.Path.Combine(Config.exeDir, $"{Config.exeName}.exe");
 
             Collection<string[]> registryKeys = new Collection<string[]> { };
             registryKeys.Add(new string[] { "HKEY_CLASSES_ROOT\\BrowserSwitch", null, null });
@@ -69,16 +68,12 @@ namespace browser_switch.Services
             Debug.WriteLine("CreateRegistry");
             SaveRegistryFile(_exePath);
 
-            FileInfo fileInfo = new FileInfo(_exePath);
-            // get exe file full direcotry
-            string exeDir = fileInfo.DirectoryName;
-
             // manual open reg file dir
-            Process.Start("explorer.exe", exeDir);
+            Process.Start("explorer.exe", Config.exeDir);
         }
 
 
-        // save registry file, it have a specific format!
+        // save registry file, it have a specific format! 
         public static void SaveRegistryFile(string exePath)
         {
             /**
@@ -144,7 +139,7 @@ namespace browser_switch.Services
             reg_file_txt += "\"Browser Switch\"=\"Software\\\\Clients\\\\StartMenuInternet\\\\Browser Switch\\\\Capabilities\"\n";
 
             // save to .reg file
-            System.IO.File.WriteAllText("Browser-Switch-Register.reg", reg_file_txt);
+            System.IO.File.WriteAllText($"{Config.exeName}-Register.reg", reg_file_txt);
         }
 
 

@@ -30,7 +30,7 @@ namespace browser_switch
         }
         private static void SendArgsToRunningInstance(string[] args)
         {
-            IntPtr hWnd = NativeMethods.FindWindow(null, "browser-switch");
+            IntPtr hWnd = NativeMethods.FindWindow(null, Config.exeName);
             string combinedArgs = string.Join("|", args);
             if (hWnd != IntPtr.Zero)
             {
