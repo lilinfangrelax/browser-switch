@@ -20,7 +20,7 @@ namespace browser_switch
 
             CheckRegistryAndDefaultBrowser();
 
-            Logger.AppendText($"Router.txt: {Config.exeDir}\\router.txt");
+            Logger.AppendText($"配置文件路径: {Config.exeDir}\\router.txt");
             Logger.AppendText(Environment.NewLine);
             Logger.AppendText(Environment.NewLine);
 
@@ -31,21 +31,24 @@ namespace browser_switch
         {
             RegistryService _registry_service = new RegistryService();
             bool ret = _registry_service.CheckIfExistRegistryKey();
-            Logger.AppendText($"Check registry: {ret}");
+            Logger.AppendText($"注册表检查: {ret}");
             Logger.AppendText(Environment.NewLine);
             if (!ret)
             {
-                Logger.AppendText("The directory will open. DOUBLE-click the file: Browser-Switch-Register.reg");
+                Logger.AppendText("目录将会打开. 请鼠标双击文件进行注册: Browser-Switch-Register.reg");
+                Logger.AppendText(Environment.NewLine);
                 Logger.AppendText(Environment.NewLine);
                 _registry_service.CreateRegistry();
             }
             bool is_default_browser = _registry_service.CheckWindowsDefaultBrowser();
-            Logger.AppendText($"Check Default Browser: {is_default_browser}");
+            Logger.AppendText($"默认浏览器检查: {is_default_browser}");
             Logger.AppendText(Environment.NewLine);
             if (!is_default_browser)
             {
-                Logger.AppendText("Please set this program as the DEFAULT application for http protocol in Windows settings ");
+                Logger.AppendText("请将本程序设置为http/https的默认打开应用（注册表先注册）");
+                Logger.AppendText(Environment.NewLine);
             }
+
             Logger.AppendText(Environment.NewLine);
         }
 
@@ -55,32 +58,39 @@ namespace browser_switch
             foreach (var browser in detector.DetectBrowsers())
             {
 
-                Logger.AppendText($"Browser: {browser.Name}");
-                Logger.AppendText(Environment.NewLine);
-                Logger.AppendText($"Installed: {browser.IsInstalled}");
-                Logger.AppendText(Environment.NewLine);
-                Logger.AppendText($"Path: {browser.InstallPath}");
-                Logger.AppendText(Environment.NewLine);
-                Logger.AppendText("Profiles:");
-                Logger.AppendText(Environment.NewLine);
-                foreach (var profile in browser.Profiles)
+                if (browser.IsInstalled)
                 {
-                    Logger.AppendText($"  {profile}");
+                    Logger.AppendText($"浏览器: {browser.Name}");
+                    Logger.AppendText(Environment.NewLine);
+                    //Logger.AppendText($"安装: {browser.IsInstalled}");
+                    //Logger.AppendText(Environment.NewLine);
+                    Logger.AppendText($"路径: {browser.InstallPath}");
+                    Logger.AppendText(Environment.NewLine);
+                    Logger.AppendText("用户配置: ");
+                    foreach (var profile in browser.Profiles)
+                    {
+                        if (browser.Name == "Mozilla Firefox")
+                            Logger.AppendText($"{profile.Split('/')[profile.Split('/').Length - 1]} | ");
+                        else
+                            Logger.AppendText($"{profile.Split('\\')[profile.Split('\\').Length - 1]} | ");
+
+                    }
+                    Logger.AppendText(Environment.NewLine);
                     Logger.AppendText(Environment.NewLine);
                 }
-                Logger.AppendText(Environment.NewLine);
+
             }
 
         }
 
         private void InitializeTray()
         {
-            notifyIcon1.Text = "Background Service Running";
+            notifyIcon1.Text = "后台服务正在运行";
 
             var menu = new ContextMenuStrip();
-            menu.Items.Add("Show Window", null, (s, e) => RestoreWindow());
-            menu.Items.Add("Router.txt", null, (s, e) => ShowConfigDir());
-            menu.Items.Add("Exit", null, (s, e) => Application.Exit());
+            menu.Items.Add("打开窗口", null, (s, e) => RestoreWindow());
+            menu.Items.Add("配置文件目录", null, (s, e) => ShowConfigDir());
+            menu.Items.Add("退出", null, (s, e) => Application.Exit());
 
             notifyIcon1.ContextMenuStrip = menu;
             notifyIcon1.MouseDoubleClick += (s, e) =>
@@ -135,7 +145,7 @@ namespace browser_switch
             if (_args.Length > 0)
             {
                 var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                string newMsg = $"[{timestamp}] Received URL: {string.Join(", ", _args)}";
+                string newMsg = $"[{timestamp}] URL: {string.Join(", ", _args)}";
                 Logger.AppendText(newMsg);
                 // logger add new line
                 Logger.AppendText(Environment.NewLine);
@@ -178,7 +188,7 @@ namespace browser_switch
             if (args.Length > 0)
             {
                 var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                string newMsg = $"[{timestamp}] Received URL: {string.Join(", ", args)}";
+                string newMsg = $"[{timestamp}] URL: {string.Join(", ", args)}";
                 Logger.AppendText(newMsg);
                 Logger.AppendText(Environment.NewLine);
                 _service.Route(args[0]);
