@@ -1,7 +1,7 @@
 
 # browser-switch ![browser-switch-icon - 24](https://github.com/user-attachments/assets/398b09ba-acd2-4dde-ac4a-1e7383677b6e)
 
-Automatically open URL links in different browsers. Configurable. 
+[【中文】](README-zh.md)Automatically open URL links in different browsers. Configurable. 
 
 ![browser-switch](https://github.com/user-attachments/assets/923dc20d-bf6b-4707-b20d-ead587a7fb94)
 
