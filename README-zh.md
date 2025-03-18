@@ -15,7 +15,7 @@
 
 ## 安装指南 📦
 
-1. 下载压缩包：[browser-switch-win-64.zip](https://github.com/lilinfangrelax/browser-switch/releases)
+1. 下载压缩包：[browser-switch-win-64_zh-CN.zip](https://github.com/lilinfangrelax/browser-switch/releases/tag/0.1.2.0318)
 2. 解压到**纯英文目录**（不支持中文或其他非英文路径）
 3. 双击运行 `browser-switch.exe`
 4. 根据软件提示**安装注册表项**，并设置为**默认浏览器应用**
